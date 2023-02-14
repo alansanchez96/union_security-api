@@ -34,6 +34,5 @@ class DatabaseSeeder extends Seeder
         $this->call(ClientSeeder::class);
         Tag::factory(15)->create();
         Scope::factory(3)->create();
-        About::factory()->create();
     }
 }
