@@ -13,13 +13,15 @@ class AuthController extends Controller
     {
         $credentials = $request->validated();
 
-        if (!$token = auth()->attempt($credentials)) {
+        if (!Auth::attempt($credentials)) {
             return response()->json([
                 'status' => '0',
                 'message' => 'Credenciales incorrectas.'
             ], 401);
         }
-        $token = auth()->login(auth()->user());
+
+        $user = Auth::user();
+        $token = $user->createToken('token')->plainTextToken;
 
         return response()->json([
             'status' => '1',
@@ -30,7 +32,7 @@ class AuthController extends Controller
 
     public function logout(): JsonResponse
     {
-        auth()->logout(true);
+        auth()->user()->tokens()->delete();
         return response()->json([
             'status' => '1',
             'message' => 'Has cerrado sesión con éxito.'

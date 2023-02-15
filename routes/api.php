@@ -21,8 +21,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('api.login');
 Route::get('/categories', [CategoryController::class, 'getAllCategories'])->name('api.getAllCategories');
 
 Route::middleware([
-    'middleware' => 'api',
-    'prefix' => 'auth'
+    'auth:sanctum'
 ])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('api.logout');
 });
